@@ -8,7 +8,6 @@ namespace FL.Automatizacion.Store.Generales
 {
     public class Empresas
     {
-        public Guid Id { get; set; }
         public string SiglaEmpresa { get; set; }
         public string NombreEmpresa { get; set; }
         public double Rendimiento { get; set; }

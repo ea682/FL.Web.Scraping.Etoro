@@ -26,7 +26,7 @@ namespace Proceso
 
             try
             {
-                ingreso.DescargarInfomracionTecnologia();
+                ingreso.DescargarInfomracionMotoresMercado();
                 sele.CloseChrome();
             } catch (Exception ex)
             {

@@ -16,7 +16,7 @@ namespace Automatizacion.Selenium.Negocio
         {
             sele = selenium;
         }
-
+        
         private Boolean IngresoPlataforma()
         {
             sele.OpenChorme();
@@ -29,7 +29,7 @@ namespace Automatizacion.Selenium.Negocio
             return false;
         }
 
-        public async Task<Boolean> DescargarInfomracionTecnologia()
+        public async Task<Boolean> DescargarInfomracionMotoresMercado()
         {
             string JsonData = "";
             //Valadimas ingreso de la pagina de etoro o la carga de la misma.
@@ -82,7 +82,7 @@ namespace Automatizacion.Selenium.Negocio
             return false;
         }
 
-        public Boolean DescargarInfomracionMotores()
+        public Boolean DescargarInfomracionTecnologia()
         {
             //Valadimas ingreso de la pagina de etoro o la carga de la misma.
             if (IngresoPlataforma())
@@ -98,15 +98,15 @@ namespace Automatizacion.Selenium.Negocio
 
             CodigoExtracionInformacion.Append("let CantidadElementos = document.querySelector('body > ui - layout > div > div > div.main - app - view.ng - scope > et - discovery - markets - results > div > div > et - discovery - markets - results - grid > div').getElementsByTagName('et-instrument-card').length;");
             CodigoExtracionInformacion.Append("let ArrayEmpresas = [];");
-            CodigoExtracionInformacion.Append("for(i = 1; i < CantidadElementos; i++){");
+            CodigoExtracionInformacion.Append("for(i = 1; i < CantidadElementos+1; i++){");
             CodigoExtracionInformacion.Append("let ArrayEmpresa  = new Object();");
-            CodigoExtracionInformacion.Append("let SiglaEmpresa = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child('+i+') > et-instrument-trading-card > div > header > et-card-avatar > a > div.avatar-info > div.symbol').innerText;");
+            CodigoExtracionInformacion.Append("let SiglaEmpresa = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child('+i+')').getElementsByClassName('symbol')[0].innerText;");
             CodigoExtracionInformacion.Append("let NombreEmpresa = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child('+i+') > et-instrument-trading-card > div > header > et-card-avatar > a > div.avatar-info > div.name').innerText;");
             CodigoExtracionInformacion.Append("let Rendimiento;");
             CodigoExtracionInformacion.Append("if(i == 1){");
-            CodigoExtracionInformacion.Append("Rendimiento = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child('+i+') > et-instrument-trading-card > div > section.instrument-card-chart-wrap > div > h6.change-p.negative').innerText;");
+            CodigoExtracionInformacion.Append("Rendimiento = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child(1) > et-instrument-trading-card > div > section.instrument-card-chart-wrap').getElementsByTagName('H6')[1].innerText;");
             CodigoExtracionInformacion.Append("}else{");
-            CodigoExtracionInformacion.Append("Rendimiento = document.querySelector('body > ui - layout > div > div > div.main - app - view.ng - scope > et - discovery - markets - results > div > div > et - discovery - markets - results - grid > div > et - instrument - card:nth - child(2) > et - instrument - trading - card > div > section.instrument - card - chart - wrap > div > h6.change - p.positive').innerText;");
+            CodigoExtracionInformacion.Append("Rendimiento = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child('+i+') > et-instrument-trading-card > div > section.instrument-card-chart-wrap').getElementsByTagName('H6')[1].innerText;");
             CodigoExtracionInformacion.Append("}");
             CodigoExtracionInformacion.Append("let PrecioCompra = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child('+i+') > et-instrument-trading-card > div > et-buy-sell-buttons > et-buy-sell-button:nth-child(3) > div > div.price').innerText;");
             CodigoExtracionInformacion.Append("let PrecioVenta = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child('+i+') > et-instrument-trading-card > div > et-buy-sell-buttons > et-buy-sell-button:nth-child(1) > div > div.price').innerText;");
