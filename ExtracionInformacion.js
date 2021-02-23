@@ -13,9 +13,13 @@ for (i = 1; i < CantidadElementos+1; i++) {
     let PrecioCompra = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child(' + i + ') > et-instrument-trading-card > div > et-buy-sell-buttons > et-buy-sell-button:nth-child(3) > div > div.price').innerText;
     let PrecioVenta = document.querySelector('body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > div > et-discovery-markets-results-grid > div > et-instrument-card:nth-child(' + i + ') > et-instrument-trading-card > div > et-buy-sell-buttons > et-buy-sell-button:nth-child(1) > div > div.price').innerText;
 
+    let RendimientoFiltrado = Rendimiento.replace('%', '');
+    if(RendimientoFiltrado == 0){
+        RendimientoFiltrado = 1.1;
+    }
     ArrayEmpresa.SiglaEmpresa = SiglaEmpresa;
     ArrayEmpresa.NombreEmpresa = NombreEmpresa;
-    ArrayEmpresa.Rendimiento = Rendimiento.replace('%', '');
+    ArrayEmpresa.Rendimiento = RendimientoFiltrado;
     ArrayEmpresa.PrecioCompra = PrecioCompra.replace(',', '.');
     ArrayEmpresa.PrecioVenta = PrecioVenta.replace(',', '.');
     ArrayEmpresas.push(ArrayEmpresa);
@@ -24,3 +28,10 @@ for (i = 1; i < CantidadElementos+1; i++) {
 var myJsonString = JSON.stringify(ArrayEmpresas);
 console.log(myJsonString);
 //return myJsonString;
+
+//-------------------------------------------------------------------
+//Obtener cantidad acciones
+let CantidadAcciones =document.querySelector("body > ui-layout > div > div > div.main-app-view.ng-scope > et-discovery-markets-results > div > et-discovery-markets-results-header > div > div.inner-menu").getElementsByClassName('paging-bold')[1].innerText;
+
+
+return Math.round(CantidadAcciones / 50);

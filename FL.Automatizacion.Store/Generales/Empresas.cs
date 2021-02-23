@@ -19,5 +19,6 @@ namespace FL.Automatizacion.Store.Generales
         public string TipoMercado { get; set; }
         public string UrlEmpresa { get; set; }
         public DateTime FechaCreacion { get; set; }
+        public Boolean MotorMercado { get; set; }
     }
 }

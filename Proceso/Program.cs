@@ -26,8 +26,9 @@ namespace Proceso
 
             try
             {
-                ingreso.DescargarInfomracionMotoresMercado();
-                sele.CloseChrome();
+                ingreso.DescargarInfomracionMotoresMercado().Wait();
+                ingreso.DescargarInfomracionAccionesAsync().Wait();
+                
             } catch (Exception ex)
             {
                 Console.WriteLine(ex);

@@ -35,6 +35,29 @@ namespace FL.Automatizacion.Store.Generales
             return retorno;
         }
 
+        private static string ValidarNull(string Dato)
+        {
+            if (Dato == null)
+            {
+                Dato = "No se encontraron datos";
+            }
+
+            return Dato;
+        }
+
+        private static string ValidarUrlNull(string Url, string SiglaEmpresa)
+        { 
+            if(Url == null){
+                string UrlEmpresa = string.Format("https://www.etoro.com/es/markets/{0}", SiglaEmpresa);
+                return UrlEmpresa;
+            }
+            else
+            {
+                return Url;
+            }
+            
+            
+        }
         public static bool IngresarUsuario(Empresas empresa)
         {
             double Venta = Convert.ToDouble(empresa.PrecioVenta);
@@ -44,22 +67,24 @@ namespace FL.Automatizacion.Store.Generales
             string ruta = "Data Source=DESKTOP-4V4E9VS;Initial Catalog=FL.Web.Scrapping.Etoro;Integrated Security=True";
             using (SqlConnection connection = new SqlConnection(ruta))
             {
-                string query = "Insert into Empresas (SiglaEmpresa, NombreEmpresa, PrecioVenta, PrecioCompra, Sector, Industria, FechaCreacion, Rendimiento, NombreCompletoMercado, TipoMercado, UrlEmpresa) values (@SiglaEmpresa, @NombreEmpresa, @PrecioVenta, @PrecioCompra, @Sector, @Industria, @FechaCreacion, @Rendimiento, @NombreCompletoMercado, @TipoMercado, @UrlEmpresa);";
+                string query = "Insert into Empresas (SiglaEmpresa, NombreEmpresa, PrecioVenta, PrecioCompra, Sector, Industria, FechaCreacion, Rendimiento, NombreCompletoMercado, TipoMercado, UrlEmpresa, MotorMercado) values (@SiglaEmpresa, @NombreEmpresa, @PrecioVenta, @PrecioCompra, @Sector, @Industria, @FechaCreacion, @Rendimiento, @NombreCompletoMercado, @TipoMercado, @UrlEmpresa, @MotorMercado);";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try
                     {
+
                         command.Parameters.AddWithValue("@SiglaEmpresa", empresa.SiglaEmpresa);
                         command.Parameters.AddWithValue("@NombreEmpresa", empresa.NombreEmpresa);
                         command.Parameters.AddWithValue("@PrecioVenta", Venta);
                         command.Parameters.AddWithValue("@PrecioCompra", Compra);
-                        command.Parameters.AddWithValue("@Sector", empresa.Sector);
-                        command.Parameters.AddWithValue("@Industria", empresa.Industria);
+                        command.Parameters.AddWithValue("@Sector", ValidarNull(empresa.Sector));
+                        command.Parameters.AddWithValue("@Industria", ValidarNull(empresa.Industria));
                         command.Parameters.AddWithValue("@FechaCreacion", DateTime.Now);
                         command.Parameters.AddWithValue("@Rendimiento", Rendimiento);
-                        command.Parameters.AddWithValue("@NombreCompletoMercado", empresa.NombreCompletoMercado);
-                        command.Parameters.AddWithValue("@TipoMercado", empresa.TipoMercado);
-                        command.Parameters.AddWithValue("@UrlEmpresa", empresa.UrlEmpresa);
+                        command.Parameters.AddWithValue("@NombreCompletoMercado", ValidarNull(empresa.NombreCompletoMercado));
+                        command.Parameters.AddWithValue("@TipoMercado", ValidarNull(empresa.TipoMercado));
+                        command.Parameters.AddWithValue("@UrlEmpresa", ValidarUrlNull(empresa.UrlEmpresa, empresa.SiglaEmpresa));
+                        command.Parameters.AddWithValue("@MotorMercado", empresa.MotorMercado);
 
                         command.CommandType = CommandType.Text;
                         connection.Open();
